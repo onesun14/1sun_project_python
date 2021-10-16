@@ -1,9 +1,4 @@
 import random
-tic_map = [i for i in range(9)]
-blank = 9
-#[0 1 2],[3 4 5],[6 7 8],[0 3 6],[1 4 7],[2 5 8],[0 4 8],[2 4 6]
-count = 2
-sequence = "o"
 def chack_line(tic_map, sequence):
     if tic_map[0] == sequence and tic_map[1] == sequence and tic_map[2] == sequence:
         count = 1
@@ -32,29 +27,46 @@ def map_view(tic_map, sequence):
     print(tic_map[3], tic_map[4], tic_map[5])
     print(tic_map[6], tic_map[7], tic_map[8])
 
-print(tic_map)
-while count != 1 or blank != 0:
-    if count == 1 or blank == 0:
-        break
-    while sequence == "o":
-        o_select = int(input("o : "))
-        if o_select == tic_map[o_select]:
-            tic_map[o_select] = "o"
-            map_view(tic_map, sequence)
-            count = chack_line(tic_map, sequence)
-            sequence = "x"
-            blank -= 1
+def chack_win(blank):
+    map_view(tic_map, sequence)
+    count = chack_line(tic_map, sequence)
+    blank -= 1
+    return count, blank
 
+def tic_play(select, blank, player, tic_map):
+    tic_map[select] = player
+    count, blank = chack_win(blank)
+    if player == "x":
+        sequence = "o"
+    elif player == "o":
+        sequence = "x"
+    return count, blank, sequence
+
+tic_map = [i for i in range(9)]
+blank = 9
+count = 2
+print(tic_map)
+num = input("o, x :")
+if num == "o":
+    player = "o"
+    bot = "x"
+else:
+    player = "x"
+    bot = "o"
+sequence = player
+while count != 1 and blank != 0:
+    while sequence == player:
+        select = int(input(player + " : "))
+        if select == tic_map[select] :
+            count, blank, sequence = tic_play(select, blank, player, tic_map)
+            print(blank)
     if count == 1 or blank == 0:
+        print("B")
         break
-    while sequence == "x":
-        a = random.randrange(0,9)
-        if a == tic_map[a]:
-            tic_map[a] = "x"
-            map_view(tic_map, sequence)
-            count = chack_line ( tic_map,sequence)
-            sequence = "o"
-            blank -= 1
+    while sequence == bot:
+        select = random.randrange(0, 9)
+        if select == tic_map[select] :
+            count, blank, sequence = tic_play(select, blank, bot, tic_map)
             print(blank)
 
 if blank == 0:
