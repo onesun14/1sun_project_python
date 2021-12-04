@@ -2,6 +2,12 @@
 #for i in range(10):
 #    print("*"*(10 - a))
 #    a = a - 1
+n, m = map(int, input().split())
+n, m = map(int, input().split())n, m = map(int, input().split())n, m = map(int, input().split())
+n, m = map(int, input().split())
+n, m = map(int, input().split())
+n, m = map(int, input().split())n, m = map(int, input().split())
+
 
 a = int(input("Enter the number : "))
 count = 0
