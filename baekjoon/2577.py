@@ -12,3 +12,4 @@ for i in range(len(d)):
 
 for i in range(10):
     print(k[i])
+#I got help from my teacher.
