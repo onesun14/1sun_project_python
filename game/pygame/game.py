@@ -24,10 +24,13 @@ def car(carImg, x, y):
 
 def knemo(knemoImg, x, y):
     screen.blit(knemoImg, (x, y))
-def hitknemo()
 running = True
-x = (display_width * 0)
-y = (display_height * 0)
+car_x = (display_width * 0)
+car_y = (display_height * 0)
+kx = 300
+ky = 300
+k_width = 300
+k_height = 300
 x_change = 0
 y_change = 0
 while running:
@@ -36,25 +39,29 @@ while running:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                x_change = -2
+                x_change = -0.5
             if event.key == pygame.K_RIGHT:
-                x_change = 2
+                x_change = 0.5
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
-                y_change = 2
+                y_change = 0.5
             if event.key == pygame.K_UP:
-                y_change = -2
+                y_change = -0.5
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 x_change = 0
             if event.key == pygame.K_DOWN or event.key == pygame.K_UP:
                 y_change = 0
+    if kx <= car_x and kx+25 >= car_x and ky <= car_y and ky+25 >= car_y:
+        hp = 0
+    if hp == 0:
+        running = False
 
     screen.fill(white)
-    x += x_change
-    y += y_change  # y = y + y_change
-    car(carImg, x, y)
-    knemo(knemoImg, 100, 100)
+    car_x += x_change
+    car_y += y_change  # y = y + y_change
+    car(carImg, car_x, car_y)
+    knemo(knemoImg, kx, ky)
     pygame.display.update()
 
 pygame.quit()
