@@ -1,8 +1,11 @@
 import pygame
+import random
 pygame.init()
 count = 0
 display_width = 800
 display_height = 600
+score = 0
+count = 0
 
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -14,7 +17,8 @@ car_width = 480
 car_height = 240
 
 hp = 1
-
+font = pygame.font.SysFont("arial", 48)
+text = font.render("test", True, white)
 screen = pygame.display.set_mode([display_width, display_height])
 carImg = pygame.image.load('./nemo.png')
 knemoImg = pygame.image.load('./knemo.png')
@@ -24,13 +28,15 @@ def car(carImg, x, y):
 
 def knemo(knemoImg, x, y):
     screen.blit(knemoImg, (x, y))
+
+
+
+
 running = True
-car_x = (display_width * 0)
-car_y = (display_height * 0)
-kx = 300
-ky = 300
-k_width = 300
-k_height = 300
+n_x = 600
+n_y = 150
+kx = 0
+ky = 0
 x_change = 0
 y_change = 0
 while running:
@@ -40,28 +46,62 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 x_change = -0.5
+        if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
                 x_change = 0.5
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
                 y_change = 0.5
+        if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 y_change = -0.5
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 x_change = 0
-            if event.key == pygame.K_DOWN or event.key == pygame.K_UP:
+            if event.key == pygame.K_DOWN:
                 y_change = 0
-    if kx <= car_x and kx+25 >= car_x and ky <= car_y and ky+25 >= car_y:
-        hp = 0
-    if hp == 0:
-        running = False
+            if event.key == pygame.K_UP:
+                y_change = 0
 
-    screen.fill(white)
-    car_x += x_change
-    car_y += y_change  # y = y + y_change
-    car(carImg, car_x, car_y)
+    if n_x <= kx <= n_x + 50 or n_x <= kx + 50 <= n_x + 50:
+        if n_y >= ky >= n_y - 50 or n_y >= ky - 50 >= n_y - 50:
+            running = False
+
+    if n_x == 800:
+        n_x = 0
+    if n_x == - 50:
+        n_x = 750
+    if n_y == -50:
+        n_y = 550
+    if n_y == 600:
+        n_y = 0
+
+    if count == 0:
+        if ky != 600:
+            ky += 0.5
+        elif ky == 600:
+            kx = 0
+            ky = random.randrange(-49, 599)
+
+            score += 100
+            count = 1
+            print(score)
+    elif count == 1:
+        if kx != 800:
+            kx += 0.5
+        elif kx == 800:
+            ky = 0
+            kx = random.randrange(-49, 799)
+            score += 100
+            count = 0
+            print(score)
+
+    #print(n_x, n_y)
+    screen.blit(text, (100, 100))
+    screen.fill(black)
+    n_x += x_change
+    n_y += y_change  # y = y + y_change
+    car(carImg, n_x, n_y)
     knemo(knemoImg, kx, ky)
     pygame.display.update()
-
 pygame.quit()
