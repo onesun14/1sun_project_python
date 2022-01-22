@@ -17,8 +17,6 @@ car_width = 480
 car_height = 240
 
 hp = 1
-font = pygame.font.SysFont("arial", 48)
-text = font.render("test", True, white)
 screen = pygame.display.set_mode([display_width, display_height])
 carImg = pygame.image.load('./nemo.png')
 knemoImg = pygame.image.load('./knemo.png')
@@ -79,17 +77,34 @@ while running:
     if count == 0:
         if ky != 600:
             ky += 0.5
-        elif ky == 600:
+        elif ky >= 600:
             kx = 0
             ky = random.randrange(-49, 599)
-
             score += 100
             count = 1
             print(score)
     elif count == 1:
         if kx != 800:
             kx += 0.5
-        elif kx == 800:
+        elif kx >= 800:
+            ky = 0
+            kx = random.randrange(-49, 799)
+            score += 100
+            count = 2
+            print(score)
+    elif count == 2:
+        if ky != 0:
+            ky += -0.5
+        elif ky <= 0:
+            kx = 800
+            ky = random.randrange(-49, 599)
+            score += 100
+            count = 3
+            print(score)
+    elif count == 3:
+        if kx != -25:
+            kx += -0.5
+        elif kx <= -25:
             ky = 0
             kx = random.randrange(-49, 799)
             score += 100
@@ -97,8 +112,16 @@ while running:
             print(score)
 
     #print(n_x, n_y)
-    screen.blit(text, (100, 100))
     screen.fill(black)
+    myFont = pygame.font.SysFont("arial", 30, True, False)
+    text_Title = myFont.render("Pygame Text Test", True, white)
+    text_Rect = text_Title.get_rect()
+    text_Rect.centerx = round(display_width / 2)
+
+    text_Rect.y = 50
+    screen.blit(text_Title, text_Rect)
+    text_Title2 = myFont.render("Pygame Text Test 2", True, white)
+    screen.blit(text_Title2, [50, 200])
     n_x += x_change
     n_y += y_change  # y = y + y_change
     car(carImg, n_x, n_y)
