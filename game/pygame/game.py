@@ -1,26 +1,7 @@
 import pygame
 import random
+from setting import *
 pygame.init()
-count = 0
-display_width = 800 #가로
-display_height = 600 #세로
-#0 ~ 800   0 ~ 600
-#왼쪽 오른쪽 위  아래
-score = 0
-
-
-black = (0, 0, 0)
-white = (255, 255, 255)
-red = (255, 0, 0)
-green = (0, 255, 0)
-blue = (0, 0, 255)
-yellow = (255, 255, 0)
-
-hp = 1
-screen = pygame.display.set_mode([display_width, display_height])
-nemoImg = pygame.image.load('./nemo.png')
-knemoImg = pygame.image.load('./knemo.png')
-background = pygame.image.load('./space.png')
 
 def nemo(nemoImg, x, y):
     screen.blit(nemoImg, (x, y))
@@ -47,12 +28,16 @@ def moving_monster(count):
     return xn_change, yn_change
 def detect(x, y):
     if y == -20:
+        print("위")
         xchange, ychange = moving_monster(1)
     elif x == 800 - 20:
+        print("오른쪽")
         xchange, ychange = moving_monster(2)
     elif y == 600 - 20:
+        print("아래")
         xchange, ychange = moving_monster(3)
     elif x == -20:
+        print("왼쪽")
         xchange, ychange = moving_monster(4)
     else:
         return
@@ -63,41 +48,31 @@ def death(n_x, n_y, kx, ky, running):
             running = False
     return running
 
+def location_detection(x, y):
+    if x <= 0 and y <= 0:
+        x = 780
+        y = 580
+    elif x <= 0 and y >= 580:
+        x = 780
+        y = 0
+    elif x >= 780 and y <= 0:
+        x = 0
+        y = 580
+    elif x >= 780 and y >= 580:
+        x = 0
+        y = 0
+    return x, y
+
 def make_text():
     myFont = pygame.font.SysFont("arial", 30, True, False)
-    text_Title = myFont.render("score: {}".format(score), True, white)
+    text_Title = myFont.render("score: {}".format(score), True, (255, 255, 255))
     text_Rect = text_Title.get_rect()
     text_Rect.centerx = 100
     text_Rect.y = 0
     screen.blit(text_Title, text_Rect)
 
 running = True
-n_x = 600
-n_y = 150
-kx = 350
-ky = 0
-kx1 = 100
-ky1 = 100
-kx2 = 200
-ky2 = 200
-kx3 = 300
-ky3 = 300
-kx4 = 400
-ky4 = 400
-x_change = 0
-y_change = 0
-kx_change = 1
-ky_change = 1
-xn_change = 1
-yn_change = 1
-xn1_change = 1
-yn1_change = 1
-xn3_change = 1
-yn3_change = 0
-xn4_change = 0.25
-yn4_change = 0.25
-ychange = 0
-xchange = 0
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -126,14 +101,14 @@ while running:
     if score >= 10000:
         running = death(n_x, n_y, kx4, ky4, running)
 
-    if n_x == 770:
-        n_x = -20
-    elif n_x == -20:
+    if n_x == 790:
+        n_x = -5
+    elif n_x == -10:
         n_x = 770
-    elif n_y == -20:
-        n_y = 570
-    elif n_y == 570:
-        n_y = -20
+    elif n_y == -10:
+        n_y = 580
+    elif n_y == 585:
+        n_y = -5
 
     if ky == -20:
         kx_change = random.randrange(-1, 1)
@@ -176,9 +151,12 @@ while running:
         kx4 += xn4_change
         ky4 += yn4_change
 
+    kx1, ky1 = location_detection(kx1, ky1)
+    kx2, ky2 = location_detection(kx2, ky2)
+    kx3, ky3 = location_detection(kx3, ky3)
 
-    #print(n_x, n_y)
-    screen.fill(black)
+    print(n_x, n_y)
+    screen.fill((0, 0, 0))
     make_text()
     score += 1
 
