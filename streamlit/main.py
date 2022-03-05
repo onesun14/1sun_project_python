@@ -1,4 +1,6 @@
 import streamlit as st
+import pandas as pd
+import numpy as np
 
 st.title("Title")
 
@@ -8,7 +10,7 @@ st.subheader("Subheader")
 
 st.write("Hello world")
 
-import streamlit as st
+
 '''
 데이터가 많을때 중간에 캐쉬를 놓아서 속도를 개선 시킨다.
 1. 함수이름 확인
@@ -18,9 +20,6 @@ import streamlit as st
 '''
 #데코레이션, 함수를 꾸며주는건데
 #함수에서 반복적으로 사용되는게 있을때 그거를 모아놓은거라고 생각하지면 될것 같아요.
-
-import pandas as pd
-import numpy as np
 
 if st.button("Click Button"):
     st.write("Hello test")
