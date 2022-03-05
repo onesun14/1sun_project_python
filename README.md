@@ -70,3 +70,19 @@ system
 ------
 * login_system
 
+streamlit
+---------
+* smjs
+![ss](https://user-images.githubusercontent.com/88918794/156863130-f69c5905-d26f-4918-93d7-23d6ffd49d62.PNG)
+  - 간단하게 할수 있는 설문조사이다.
+* 실행법
+```java
+터미널에서
+
+streamlit run smjs.py
+```
+* load
+  - 항목을 선택한 수들을 모아서 보여준다.
+* requirements
+
+
